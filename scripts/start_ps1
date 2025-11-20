@@ -1,0 +1,11 @@
+#!/usr/bin/env pwsh
+
+if (-not (Test-Path -Path .venv)) {
+    python -m venv .venv
+}
+# dot-source activate script for PowerShell
+. .\venv\Scripts\Activate.ps1
+python -m pip install --upgrade pip setuptools wheel
+pip install -r requirements-minimal.txt
+python -c "import nltk; nltk.download('wordnet')"
+python -m uvicorn src.ai_test_lab.sandbox.main:app --reload --host 0.0.0.0 --port 8000

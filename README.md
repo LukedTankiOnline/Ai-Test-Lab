@@ -89,6 +89,49 @@ This toolbox is intended for internal security research and responsible red-team
 License
 
 MIT-style (not included). Cite responsibly.
+Windows quick start
+
+If you're on Windows and the Unix commands in the Quick start don't work, use one of the options below.
+
+1) If `git` is not installed
+- Download the ZIP of the repository from: `https://github.com/LukedTankiOnline/Ai-Test-Lab/archive/refs/heads/main.zip` and extract it.
+
+2) Using Command Prompt (CMD)
+
+Open `cmd.exe` and run:
+
+```bat
+REM from the repo root
+python -m venv .venv
+.venv\Scripts\activate.bat
+pip install -r requirements-minimal.txt
+python -c "import nltk; nltk.download('wordnet')"
+python -m uvicorn src.ai_test_lab.sandbox.main:app --reload --host 0.0.0.0 --port 8000
+```
+
+3) Using PowerShell
+
+Open PowerShell (or PowerShell Core) and run:
+
+```powershell
+# from the repo root
+python -m venv .venv
+. .\venv\Scripts\Activate.ps1
+python -m pip install --upgrade pip setuptools wheel
+pip install -r requirements-minimal.txt
+python -c "import nltk; nltk.download('wordnet')"
+python -m uvicorn src.ai_test_lab.sandbox.main:app --reload --host 0.0.0.0 --port 8000
+```
+
+4) Helper scripts
+
+I added helper scripts to `scripts/` for Windows users:
+- `scripts\start_cmd.bat` — set up venv and start sandbox (CMD)
+- `scripts\start_ps1` — PowerShell script to set up venv and start sandbox
+- `scripts\test_cmd.bat` — run tests in CMD (sets `PYTHONPATH`)
+- `scripts\test_ps1` — run tests in PowerShell (sets `PYTHONPATH`)
+
+If you prefer Unix-like tooling on Windows, consider using Git Bash or WSL (Windows Subsystem for Linux) — both provide a POSIX shell and work well with the original quick-start commands.
 # CI and convenience
 
 This repository includes a GitHub Actions workflow at `/.github/workflows/ci.yml` that runs the test suite on pushes and PRs for Python 3.11 and 3.12. The workflow installs required system build packages before installing `requirements-full.txt` so compiled extensions can build.

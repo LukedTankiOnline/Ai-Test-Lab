@@ -1,0 +1,8 @@
+#!/usr/bin/env pwsh
+if (-not (Test-Path -Path .venv)) {
+    Write-Output "No .venv found; tests will run with system Python environment"
+} else {
+    . .\venv\Scripts\Activate.ps1
+}
+$env:PYTHONPATH = ".;./src"
+pytest -q
