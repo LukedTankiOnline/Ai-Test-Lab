@@ -11,22 +11,41 @@ Components:
 - Exploit Dashboard: Simple HTML view served by the FastAPI app at `/dashboard`.
 
 Getting started
-1. Create a Python virtualenv and install dependencies:
+
+Quick start (minimal demo)
+
+1. Create a Python virtualenv and install the minimal runtime dependencies:
 
 ```bash
 python -m venv .venv
 source .venv/bin/activate
-pip install -r requirements.txt
+pip install -r requirements-minimal.txt
 python -c "import nltk; nltk.download('wordnet')"
 ```
 
-2. Run the sandbox:
+2. Run the sandbox (demo mode — uses simulated model if `OPENAI_API_KEY` is not set):
 
 ```bash
 uvicorn src.ai_test_lab.sandbox.main:app --reload --host 0.0.0.0 --port 8000
 ```
 
-Open http://localhost:8000/dashboard to view logs.
+Open `http://localhost:8000/dashboard` to view logs and the dashboard.
+
+Full install
+
+If you want the full feature set (traffic analysis, clustering, and optional extras) install the full requirements which may need system build tools on some platforms:
+
+```bash
+# on Debian/Ubuntu you may need build tools first
+sudo apt-get update && sudo apt-get install -y build-essential python3-dev libssl-dev libffi-dev
+python -m venv .venv
+source .venv/bin/activate
+python -m pip install --upgrade pip setuptools wheel
+pip install -r requirements.txt
+python -c "import nltk; nltk.download('wordnet')"
+```
+
+Then run the sandbox as above.
 
 Fuzzer
 
