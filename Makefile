@@ -18,8 +18,13 @@ start:
 
 test:
 	# Ensure NLTK wordnet is present for semantic_fuzzer
-	. .venv/bin/activate && $(PYTHON) -c "import nltk; nltk.download('wordnet')" || true
-	PYTHONPATH=.:./src .venv/bin/pytest -q
+	@echo "Ensuring NLTK wordnet is available..."
+	$(PYTHON) -c "import nltk; nltk.download('wordnet')" || true
+	@if [ -x .venv/bin/pytest ]; then \
+		PYTHONPATH=.:./src .venv/bin/pytest -q; \
+	else \
+		PYTHONPATH=.:./src $(PYTHON) -m pytest -q; \
+	fi
 
 clean:
 	rm -rf .venv
