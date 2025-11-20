@@ -89,4 +89,16 @@ This toolbox is intended for internal security research and responsible red-team
 License
 
 MIT-style (not included). Cite responsibly.
+# CI and convenience
+
+This repository includes a GitHub Actions workflow at `/.github/workflows/ci.yml` that runs the test suite on pushes and PRs for Python 3.11 and 3.12. The workflow installs required system build packages before installing `requirements-full.txt` so compiled extensions can build.
+
+There is also a `Makefile` with convenient targets:
+
+- `make install-minimal` — create a venv and install `requirements-minimal.txt` for a quick demo.
+- `make install-full` — installs system build deps (Debian/Ubuntu example) and then installs `requirements-full.txt`.
+- `make start` — run the FastAPI sandbox (assumes `.venv` activated by `install-*`).
+- `make test` — run the test suite (ensures `wordnet` is available and runs `pytest`).
+
+If you want CI to also publish releases or build packages, tell me and I will add a release workflow and `pyproject.toml` packaging metadata.
 # Ai-Test-Lab
