@@ -132,6 +132,30 @@ I added helper scripts to `scripts/` for Windows users:
 - `scripts\test_ps1` — run tests in PowerShell (sets `PYTHONPATH`)
 
 If you prefer Unix-like tooling on Windows, consider using Git Bash or WSL (Windows Subsystem for Linux) — both provide a POSIX shell and work well with the original quick-start commands.
+ 
+Windows Troubleshooting (common errors & fixes)
+
+- "'git' is not recognized as an internal or external command":
+	- Install Git for Windows: https://git-scm.com/download/win and re-open your shell. Or download the ZIP from GitHub and extract it.
+
+- "'source' is not recognized as an internal or external command":
+	- Use the Windows activation commands shown above: CMD uses `.venv\Scripts\activate.bat`; PowerShell uses `. .\venv\Scripts\Activate.ps1`.
+
+- "'uvicorn' is not recognized as an internal or external command":
+	- Activate the venv first, or run `python -m uvicorn src.ai_test_lab.sandbox.main:app ...` so the module is invoked through Python.
+
+- "Could not open requirements file" or file not found errors:
+	- Ensure you're running commands from the repository root (where `requirements-minimal.txt` and `requirements-full.txt` live).
+	- If you downloaded a ZIP, extract to a folder first.
+
+- `PYTHONPATH=.:./src pytest -q` fails on CMD:
+	- On CMD use `set PYTHONPATH=.;.\src` then `pytest -q`.
+	- On PowerShell use `$env:PYTHONPATH = ".;./src"` then `pytest -q`.
+
+Additional notes:
+- Some packages in `requirements-full.txt` require native build tools (C compiler, headers). On Windows you may need to install Build Tools for Visual Studio or use WSL for a smoother install of Linux-targeted wheels.
+- For packet capture on Windows, `pyshark` and some scapy features may require additional native dependencies and administrator privileges.
+
 # CI and convenience
 
 This repository includes a GitHub Actions workflow at `/.github/workflows/ci.yml` that runs the test suite on pushes and PRs for Python 3.11 and 3.12. The workflow installs required system build packages before installing `requirements-full.txt` so compiled extensions can build.
